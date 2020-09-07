@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace DBListDemo
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
-        {
-            var program = new Program();
-            var task = Task.Run(program.Run);
-            task.Wait();
-        }
-
         private static bool Running = true;
+        private static Api api = new Api();
 
-        async Task Run()
+        static void Main(string[] args)
         {
             while (Running)
             {
@@ -22,6 +15,12 @@ namespace DBListDemo
                 Console.WriteLine("Ben's TODO list app");
                 Console.WriteLine();
 
+                foreach (var todo in api.GetTodos())
+                {
+                    Console.WriteLine($"* {todo}");
+                }
+
+                Console.WriteLine();
                 Console.WriteLine("Press 0 to exit");
                 Console.WriteLine("Press 1 to create a new TODO");
                 int result = -1;

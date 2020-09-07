@@ -11,7 +11,7 @@ namespace DBListDemo
         {
             while (Running)
             {
-                Console.Clear();
+                Console.WriteLine();
                 Console.WriteLine("Ben's TODO list app");
                 Console.WriteLine();
 
@@ -21,18 +21,20 @@ namespace DBListDemo
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Press 0 to exit");
-                Console.WriteLine("Press 1 to create a new TODO");
+                Console.WriteLine("Press 1 to exit");
+                Console.WriteLine("Press 2 to create a new TODO");
 
                 // Accept a keypress from the user
-                int result = int.Parse(Console.ReadKey(true).KeyChar.ToString());
+                int result = -1;
+                int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out result);
 
                 switch (result)
                 {
-                    case 0: // exit
+                    case 1: // exit
                         Running = false;
                         break;
-                    case 1: // create
+                    case 2: // create
+                        Console.WriteLine();
                         Console.WriteLine("Please enter a title for your new todo:");
                         string title = Console.ReadLine();
 

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace DBListDemo
 {
     class Api
     {
-        private readonly string TodosUrl = "https://php.mmc.school.nz/201COS/benjamindavies/db-list-demo-api";
+        private readonly string TodosUrl = "https://php.mmc.school.nz/201COS/benjamindavies/db-list-demo-api/";
 
         private HttpClient http;
         private string[] todos;
@@ -40,9 +41,9 @@ namespace DBListDemo
 
         private async Task CreateTodoAsync()
         {
-            var fields = new KeyValuePair<string, string>[]
+            var fields = new Dictionary<string, string>
             {
-                new KeyValuePair<string, string>("title", todo),
+                { "title", todo },
             };
             var content = new FormUrlEncodedContent(fields);
             var res = await http.PostAsync(TodosUrl, content);

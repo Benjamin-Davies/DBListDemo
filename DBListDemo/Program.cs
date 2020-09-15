@@ -5,9 +5,9 @@ namespace DBListDemo
     static class Program
     {
         private static bool Running = true;
-        private static Api api = new Api();
+        private static readonly Api api = new Api();
 
-        static void Main(string[] args)
+        static void Main()
         {
             while (Running)
             {
@@ -15,25 +15,25 @@ namespace DBListDemo
                 Console.WriteLine("Ben's TODO list app");
                 Console.WriteLine();
 
-                foreach (var todo in api.GetTodos())
+                var todos = api.GetTodos();
+                for (int i = 0; i < todos.Length; i++)
                 {
-                    Console.WriteLine($"* {todo}");
+                    var todo = todos[i];
+                    Console.WriteLine($"{i + 1}. {todo}");
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Press 1 to exit");
-                Console.WriteLine("Press 2 to create a new TODO");
+                Console.WriteLine("Press q to quit");
+                Console.WriteLine("Press c to create a new TODO");
 
                 // Accept a keypress from the user
-                int result = -1;
-                int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out result);
-
-                switch (result)
+                char key = Console.ReadKey(true).KeyChar;
+                switch (key)
                 {
-                    case 1: // exit
+                    case 'q': // exit
                         Running = false;
                         break;
-                    case 2: // create
+                    case 'c': // create
                         Console.WriteLine();
                         Console.WriteLine("Please enter a title for your new todo:");
                         string title = Console.ReadLine();
@@ -43,7 +43,6 @@ namespace DBListDemo
                         break;
                 }
             }
-
         }
     }
 }

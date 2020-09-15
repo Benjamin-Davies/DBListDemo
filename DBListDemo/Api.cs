@@ -13,6 +13,7 @@ namespace DBListDemo
         private HttpClient http;
         private string[] todos;
         private string todo;
+        private int n;
 
         public Api()
         {
@@ -47,6 +48,18 @@ namespace DBListDemo
             };
             var content = new FormUrlEncodedContent(fields);
             var res = await http.PostAsync(TodosUrl, content);
+            await HandleErrors(res);
+        }
+
+        public void DeleteTodo(int n)
+        {
+            this.n = n;
+            Task.Run(DeleteTodoAsync).Wait();
+        }
+
+        private async Task DeleteTodoAsync()
+        {
+            var res = await http.DeleteAsync(TodosUrl + $"?n={n}");
             await HandleErrors(res);
         }
 
